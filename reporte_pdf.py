@@ -13,6 +13,12 @@ import io
 import os
 import base64
 import tempfile
+import logging
+# import io
+# import os
+# import base64
+# import tempfile
+# import logging
 
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import cm
@@ -24,10 +30,30 @@ from reportlab.platypus import (
 )
 
 # Datos fijos de la empresa (marca SINERGIA)
+# Datos fijos de la empresa (marca SINERGIA)
 EMPRESA_NOMBRE = "SINERGIA SOLUCIONES S. A."
 EMPRESA_DIR = "Sacatepéquez, Guatemala\nMonitoreo Vehicular\nwww.sinergia.com.gt"
 
+# Ruta del logo: se busca junto a este archivo. Si existe, se usa; si no, texto.
+RUTA_LOGO = os.path.join(os.path.dirname(__file__), "logo.png")
+
+# Configuración de logging y límite de tamaño de imágenes
+logger = logging.getLogger("reporte_pdf")
+MAX_FOTO_MB = 10   # tamaño máximo permitido por foto, en megabytes
+
 ANCHO_UTIL = 18 * cm
+# EMPRESA_NOMBRE = "SINERGIA SOLUCIONES S. A."
+# EMPRESA_DIR = "Sacatepéquez, Guatemala\nMonitoreo Vehicular\nwww.sinergia.com.gt"
+
+# # Ruta del logo: se busca junto a este archivo. Si existe, se usa; si no, texto.
+# RUTA_LOGO = os.path.join(os.path.dirname(__file__), "logo.png")
+
+# # Configuración de logging y límite de tamaño de imágenes
+# logger = logging.getLogger("reporte_pdf")
+MAX_FOTO_MB = 10   # tamaño máximo permitido por foto, en megabytes
+# EMPRESA_DIR = "Sacatepéquez, Guatemala\nMonitoreo Vehicular\nwww.sinergia.com.gt"
+# RUTA_LOGO = os.path.join(os.path.dirname(__file__), "logo.png")
+# ANCHO_UTIL = 18 * cm
 
 
 def _val(datos, campo, defecto="—"):
@@ -90,12 +116,30 @@ def generar_pdf_reporte(datos: dict, fotografias: list) -> bytes:
     story = []
 
     # ---------- ENCABEZADO ----------
+ ##   empresa_txt = EMPRESA_DIR.replace("\n", "<br/>")
+ ##   encabezado = Table(
+ ##       [[Paragraph("[LOGO SINERGIA]", est_empresa),
+ ##         Paragraph(f"<b>{EMPRESA_NOMBRE}</b><br/>{empresa_txt}", est_empresa)]],
+ ##       colWidths=[ANCHO_UTIL * 0.4, ANCHO_UTIL * 0.6],
+ ##   )
+
+    # ---------- ENCABEZADO ----------
     empresa_txt = EMPRESA_DIR.replace("\n", "<br/>")
+
+    # Si existe logo.png y es una imagen válida, lo usamos; si no, texto de respaldo.
+    if os.path.exists(RUTA_LOGO) and _imagen_valida(RUTA_LOGO):
+        celda_logo = Image(RUTA_LOGO, width=ANCHO_UTIL * 0.35, height=1.6 * cm)
+    else:
+        celda_logo = Paragraph("[LOGO SINERGIA]", est_empresa)
+
     encabezado = Table(
-        [[Paragraph("[LOGO SINERGIA]", est_empresa),
+        [[celda_logo,
           Paragraph(f"<b>{EMPRESA_NOMBRE}</b><br/>{empresa_txt}", est_empresa)]],
         colWidths=[ANCHO_UTIL * 0.4, ANCHO_UTIL * 0.6],
     )
+
+
+
     encabezado.setStyle(TableStyle([
         ("BOX", (0, 0), (-1, -1), 0.5, colors.black),
         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
@@ -228,26 +272,76 @@ def generar_pdf_reporte(datos: dict, fotografias: list) -> bytes:
     buffer.seek(0)
     return buffer.getvalue()
 
+# def guardar_fotos_temporales(fotografias_base64: list) -> tuple[list, list]:
+# #def guardar_fotos_temporales(fotografias_base64: list) -> list:
+#     """
+#     Recibe las fotos como base64 (lo que manda el frontend), las escribe
+#     en archivos temporales y devuelve la lista lista para generar_pdf_reporte.
+#     Los archivos temporales se limpian después con limpiar_temporales().
+#     """
+#     fotos_listas = []
+#     temporales = []
+#     for i, foto in enumerate(fotografias_base64):
+#         b64 = foto.get("imagen_base64", "")
+#         ruta_tmp = None
+#         if b64:
+#             try:
+#                 fd, ruta_tmp = tempfile.mkstemp(suffix=".jpg", prefix=f"foto_{i}_")
+#                 with os.fdopen(fd, "wb") as f:
+#                     f.write(base64.b64decode(b64))
+#                 temporales.append(ruta_tmp)
+#             except Exception:
+#                 ruta_tmp = None
+#         fotos_listas.append({
+#             "componente": foto.get("componente", ""),
+#             "observacion": foto.get("observacion", ""),
+#             "ruta_archivo": ruta_tmp,
+#             "orden": foto.get("orden", i),
+#         })
+#     return fotos_listas, temporales
 
-def guardar_fotos_temporales(fotografias_base64: list) -> list:
+def guardar_fotos_temporales(fotografias_base64: list) -> tuple[list, list]:
     """
     Recibe las fotos como base64 (lo que manda el frontend), las escribe
-    en archivos temporales y devuelve la lista lista para generar_pdf_reporte.
+    en archivos temporales y devuelve (fotos_listas, temporales).
     Los archivos temporales se limpian después con limpiar_temporales().
+
+    Robustez:
+    - Limpia el prefijo "data:image/...;base64," si el frontend lo envía.
+    - Rechaza imágenes que superen MAX_FOTO_MB (evita colgar el servidor).
+    - Deja rastro en el log cuando una foto no se puede procesar.
     """
     fotos_listas = []
     temporales = []
     for i, foto in enumerate(fotografias_base64):
-        b64 = foto.get("imagen_base64", "")
+        b64 = foto.get("imagen_base64", "") or ""
         ruta_tmp = None
+
+        # Limpia el prefijo tipo "data:image/jpeg;base64," si viene incluido
+        if "," in b64 and b64.strip().lower().startswith("data:"):
+            b64 = b64.split(",", 1)[1]
+
         if b64:
             try:
-                fd, ruta_tmp = tempfile.mkstemp(suffix=".jpg", prefix=f"foto_{i}_")
-                with os.fdopen(fd, "wb") as f:
-                    f.write(base64.b64decode(b64))
-                temporales.append(ruta_tmp)
-            except Exception:
+                datos_imagen = base64.b64decode(b64, validate=True)
+
+                # Rechaza imágenes demasiado grandes
+                tam_mb = len(datos_imagen) / (1024 * 1024)
+                if tam_mb > MAX_FOTO_MB:
+                    logger.warning(
+                        "Foto %d descartada: pesa %.1f MB (límite %.1f MB).",
+                        i, tam_mb, MAX_FOTO_MB
+                    )
+                    ruta_tmp = None
+                else:
+                    fd, ruta_tmp = tempfile.mkstemp(suffix=".jpg", prefix=f"foto_{i}_")
+                    with os.fdopen(fd, "wb") as f:
+                        f.write(datos_imagen)
+                    temporales.append(ruta_tmp)
+            except Exception as e:
+                logger.warning("No se pudo procesar la foto %d: %s", i, e)
                 ruta_tmp = None
+
         fotos_listas.append({
             "componente": foto.get("componente", ""),
             "observacion": foto.get("observacion", ""),
@@ -255,6 +349,7 @@ def guardar_fotos_temporales(fotografias_base64: list) -> list:
             "orden": foto.get("orden", i),
         })
     return fotos_listas, temporales
+
 
 
 def limpiar_temporales(temporales: list):

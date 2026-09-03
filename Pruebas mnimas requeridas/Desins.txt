@@ -1,0 +1,35 @@
+{
+  "correo_supervisor": "supervisor@sinergia.com.gt",
+  "cliente": "AZUCARERA MAGDALENA",
+  "direccion": "Finca El Naranjo, La Gomera",
+  "ciudad": "La Gomera, Escuintla",
+  "pais": "Guatemala",
+  "tercero": "Ana Recinos (Sinergia)",
+  "proyecto": "PROY-2026-022",
+  "actividad": "Desinstalación",
+  "tipo_equipo": "Cosechadora",
+  "modelo_equipo": "Case IH A8800",
+  "unidad": "CO-012",
+  "placa": "No aplica",
+  "tecnico": "Ana Recinos",
+  "fotografias": [
+    {
+      "componente": "Equipo retirado",
+      "observacion": "MAG 100 desmontado sin daños, entregado a bodega",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 0
+    },
+    {
+      "componente": "Cableado retirado",
+      "observacion": "Arnés completo recuperado, sin cortes",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 1
+    },
+    {
+      "componente": "Punto de instalación",
+      "observacion": "Superficie limpia, perforaciones selladas",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 2
+    }
+  ]
+}

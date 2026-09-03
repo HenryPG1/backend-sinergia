@@ -1,0 +1,53 @@
+{
+  "correo_supervisor": "supervisor@sinergia.com.gt",
+  "cliente": "MAGDALENA",
+  "direccion": "KM 99.5 Carretera a Sipacate, Interior Finca Buganvilia",
+  "ciudad": "La Democracia, Escuintla",
+  "pais": "Guatemala",
+  "tercero": "Noe Mijangos (Sinergia)",
+  "proyecto": "",
+  "actividad": "Instalación",
+  "tipo_equipo": "TPL",
+  "modelo_equipo": "John Deere",
+  "unidad": "07-234",
+  "placa": "No",
+  "tecnico": "Noe Mijangos",
+  "fotografias": [
+    {
+      "componente": "Flota",
+      "observacion": "-",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 0
+    },
+    {
+      "componente": "Antena GPS",
+      "observacion": "-",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 1
+    },
+    {
+      "componente": "Antena GPRS",
+      "observacion": "-",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 2
+    },
+    {
+      "componente": "Antena Zigbee",
+      "observacion": "-",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 3
+    },
+    {
+      "componente": "Pantalla S7",
+      "observacion": "-",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 4
+    },
+    {
+      "componente": "MAG 100",
+      "observacion": "-",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 5
+    }
+  ]
+}

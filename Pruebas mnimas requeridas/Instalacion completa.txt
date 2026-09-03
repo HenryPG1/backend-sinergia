@@ -1,0 +1,53 @@
+{
+  "correo_supervisor": "supervisor@sinergia.com.gt",
+  "cliente": "INGENIO PANTALEON",
+  "direccion": "KM 87.5 Carretera a Siquinalá, Escuintla",
+  "ciudad": "Siquinalá, Escuintla",
+  "pais": "Guatemala",
+  "tercero": "Carlos López (Sinergia)",
+  "proyecto": "PROY-2026-018",
+  "actividad": "Instalación",
+  "tipo_equipo": "Tractor",
+  "modelo_equipo": "John Deere 6110J",
+  "unidad": "TR-045",
+  "placa": "No aplica",
+  "tecnico": "Carlos López",
+  "fotografias": [
+    {
+      "componente": "Flota",
+      "observacion": "Unidad identificada con número de flota visible en cabina",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 0
+    },
+    {
+      "componente": "Antena GPS",
+      "observacion": "Instalada en techo de cabina, sin obstrucciones",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 1
+    },
+    {
+      "componente": "Fusible",
+      "observacion": "Fusible de 10A conectado a línea positiva protegida",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 2
+    },
+    {
+      "componente": "Positivo",
+      "observacion": "Conexión directa a batería, terminal aislada",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 3
+    },
+    {
+      "componente": "Negativo",
+      "observacion": "Aterrizado a chasis, punto limpio sin pintura",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 4
+    },
+    {
+      "componente": "Pantalla S7",
+      "observacion": "Encendida y sincronizando correctamente",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 5
+    }
+  ]
+}

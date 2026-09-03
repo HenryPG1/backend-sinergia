@@ -1,0 +1,11 @@
+{
+  "correo_supervisor": "supervisor@empresa.com",
+  "unidad": "07-234",
+  "fotografias": [
+    {
+      "componente": "Antena GPS",
+      "imagen_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "orden": 0
+    }
+  ]
+}
